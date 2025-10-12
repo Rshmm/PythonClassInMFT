@@ -148,7 +148,4 @@ table.column(5, width=90)
 
 table.place(x=280, y=20)
 
-
-table.bind("<<TreeviewSelect>>",on_click)
-
 win.mainloop()
