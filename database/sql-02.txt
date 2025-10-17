@@ -1,0 +1,25 @@
+-- CrEatE dAtabase test;
+-- drop database test;
+
+-- create table mft.kala(code int, name char(30), count int);
+-- alter table mft.kala add aaa int;
+-- drop table mft.kala;
+
+
+-- Add new Record
+-- insert into db.table (fields) values(...);
+-- insert into mft.student (code,name,family) values (2,'mohsen','rezaii'), (3,'hasan','hasani');
+
+-- Report / Search
+-- select fields from db.table where condition;
+-- select * from mft.student;
+-- select * from mft.student where name='mohsen' or code=1;
+
+-- Edit
+-- update db.table set field=value where condition;
+-- update mft.student set name='AAA', family="BBB" where code = 1;
+
+-- Remove
+-- delete from mft.student where code = 1;
+
+select * from mft.student;
