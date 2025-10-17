@@ -3,6 +3,7 @@ from tkinter import ttk
 
 def on_select(event):
     selected_item = tree.focus()  # شناسه آیتم انتخاب‌شده
+    print(selected_item)
     values = tree.item(selected_item, "values")
     print("Selected:", values)
 

@@ -1,0 +1,52 @@
+# drop database onlineshop;
+# create database shop;
+# create table shop.products(code int, name char(30), brand char(50));
+# alter table shop.products add price int;
+# insert into shop.products
+# values (1,'iphone12','apple',1200);
+# insert into shop.products
+# values (2,'iphone13','apple',1200);
+# insert into shop.products
+# values (3,'iphone14','apple',1200);
+# insert into shop.products
+# values (4,'iphone15','apple',1200);
+# insert into shop.products
+# values (5,'a51','samsung',600),
+#        (6,'s 24 ultra','samsung',1300),
+#        (7,'a01','samsung',150);
+
+# select name,price from shop.products
+# select * from shop.products
+# select * from shop.products where price<600
+# select * from shop.products where code BETWEEN 4 and 7
+
+# update shop.products set name='aaa'
+
+# drop table shop.products;
+# create table shop.products(code int, name char(30), brand char(50), price int);
+# insert into shop.products
+# values (1,'iphone12','apple',1200);
+# insert into shop.products
+# values (2,'iphone13','apple',1200);
+# insert into shop.products
+# values (3,'iphone14','apple',1200);
+# insert into shop.products
+# values (4,'iphone15','apple',1200);
+# insert into shop.products
+# values (5,'a51','samsung',600),
+#        (6,'s 24 ultra','samsung',1300),
+#        (7,'a01','samsung',150);
+
+
+# DROP DATABASE shop;
+# CREATE DATABASE store;
+
+CREATE TABLE IF NOT EXISTS store.products(
+    code INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name CHAR(30),
+    brand CHAR(30),
+    price INTEGER
+);
+
+SELECT * FROM STORE.products WHERE price LIKE '1___';
+

@@ -1,0 +1,53 @@
+# select name,brand,price from stuff where price > 1000;
+# select * from stuff where brand = 'samsung' or brand='asus';
+# select * from stuff where brand in ('samsung','asus');
+
+# select * from stuff where code = 1 or code = 4 or code = 7;
+# select * from stuff where code in (1,4,7);
+
+
+# select * from stuff where code>=3 and code<=5;
+# select * from stuff where code between 3 and 5;
+
+# select distinct name from stuff;
+
+# % any character - 0...n
+# _ any character - 1
+# select * from stuff where price like '1%';
+
+# select * from stuff ORDER BY name,brand DESC;
+
+
+# select * from stuff where code > 4 ORDER BY name,brand DESC;
+
+# alias
+# select code as serial_number,name,brand,price as gheymat from stuff;
+
+# null
+# select * from stuff where brand is not null and price is not null;
+
+# select * from stuff limit 3;
+
+# update stuff set price = 2000 where code in (3,4,8,9,10);
+
+# delete from stuff where brand is null or price is null;
+
+# select count(*) from stuff;
+# select max(price) from stuff;
+# select min(price) from stuff;
+# select sum(price) from stuff;
+# select avg(price) from stuff where name ='laptop';
+# select max(price) from stuff where name ='mouse';
+
+
+----------------------------------------------------------------
+
+# select
+#     stuff_name,
+#     price,
+#     count,
+#     price*count as amount,
+#     discount,
+#     price*count-discount as pure_amount
+# from invoice;
+#
