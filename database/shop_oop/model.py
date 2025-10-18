@@ -1,71 +1,65 @@
 import mysql.connector
 
 class ProductModel:
-
-    def __init__(self,name,brand,price):
+    # get product info
+    def __init__(self, name=None, brand=None, price=None):
         self.name = name
         self.brand = brand
         self.price = price
-        # connect
-        db = mysql.connector.connect(
-                                    host = "localhost",
-                                    database = "store",
-                                    user="root",
-                                    password="root123",
-                                     )
 
-
-        cursor = db.cursor()
-
-        # operation
-        cursor.execute("INSERT INTO store.products (name,brand,price) VALUES (%s,%s,%s)",
-                       [name,brand,price])
-        db.commit()
-
-        # close
-        cursor.close()
-        db.close()
-
-
-    @staticmethod
-    def remove_product(code):
-        # connect
-        db = mysql.connector.connect(
+    # connect
+    def _connect(self):
+        return mysql.connector.connect(
             host="localhost",
             database="store",
             user="root",
             password="root123",
         )
 
-        cursor = db.cursor()
+    # --- CRUD Methods ---
 
-        # operation
-        cursor.execute("DELETE FROM store.products WHERE code =  (%s)", [code])
-        db.commit()
-
-        # close
-        cursor.close()
-        db.close()
-
-    @staticmethod
-    def edit_products(code,new_name,new_brand,new_price):
+    # add product
+    def save(self):
         # connect
-        db = mysql.connector.connect(
-            host="localhost",
-            database="store",
-            user="root",
-            password="root123",
-        )
-
-        cursor = db.cursor()
-
+        db = self._connect()
         # operation
-        cursor.execute("UPDATE products SET name=%s, brand=%s, price=%s WHERE code=%s", [new_name,new_brand,new_price,code])
+        cursor = db.cursor()
+        cursor.execute(
+            "INSERT INTO products (name, brand, price) VALUES (%s, %s, %s)",
+            [self.name, self.brand, self.price]
+        )
         db.commit()
-
-        # close
+        # disconnect
         cursor.close()
         db.close()
 
+    # edit
+    def update(self):
+        # connect
+        db = self._connect()
+        # operation
+        cursor = db.cursor()
+        cursor.execute(
+            "UPDATE products SET name=%s, brand=%s, price=%s WHERE code=%s",
+            [self.name, self.brand, self.price, self.code]
+        )
+        db.commit()
+        affected = cursor.rowcount
+        # disconnect
+        cursor.close()
+        db.close()
+        return affected > 0  # True یعنی محصولی واقعاً ویرایش شده
 
-
+    # remove
+    def delete(self):
+        # connect
+        db = self._connect()
+        # operation
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM products WHERE code=%s", [self.code])
+        db.commit()
+        affected = cursor.rowcount
+        # disconnect
+        cursor.close()
+        db.close()
+        return affected > 0

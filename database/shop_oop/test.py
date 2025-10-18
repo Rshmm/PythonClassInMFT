@@ -8,14 +8,26 @@ from database.shop_oop.controller import ProductController
 # p4 = ProductModel("iphone 14 ", 'apple', 1000)
 # p5 = ProductModel("a56", 'samsung', 560)
 # p6 = ProductModel("s25 ultra", 'samsung', 1500)
-# print(ProductController.add_product("aaaaa", "bdd", "aaa"))
-# print(p1)
+# p1.save()
+# p2.save()
+# p3.save()
+# p4.save()
+# p5.save()
+# p6.save()
 
 # remove
-# ProductModel.remove_product(17)
-# ProductController.remove_product(22)
+controller = ProductController()
 
-# edit
+# ProductModel.remove_product(17)
+# حذف محصول
+success, msg = controller.remove_product(31)
+print(success, msg)
+# انتظار:
+# True, "Product 1 deleted successfully"
+
+
+#
+# # edit
 # print(ProductController.edit_product(22,"aaaaa", "bdd", "12000"))
 # print(ProductController.edit_product(45,"aaaaa", "bdd", "13000"))
 # ProductModel.edit_products(15,"s25 ultra","samsung", 2200)

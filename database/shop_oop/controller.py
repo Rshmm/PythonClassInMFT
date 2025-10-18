@@ -1,80 +1,45 @@
-import re
 from model import ProductModel
-
+import re
 
 class ProductController:
+    def add_product(self, name, brand, price):
+        name, brand, price = name.strip(), brand.strip(), price.strip()
 
-    @staticmethod
-    def add_product(name,brand,price):
-        name = name.strip()
-        brand = brand.strip()
-        price = price.strip()
-
-
-        if not re.fullmatch("[a-zA-Z0-9\s]{2,32}", name):
-            return False, f"{name}, only use letters and digits and space"
-
-        if not re.fullmatch("[a-zA-Z0-9\s]{2,32}", brand):
-            return False, f"{brand}, only use letters and digits and space"
-
+        if not re.fullmatch(r"[A-Za-z0-9\s]{2,32}", name):
+            return False, f"Invalid name: {name}"
+        if not re.fullmatch(r"[A-Za-z0-9\s]{2,32}", brand):
+            return False, f"Invalid brand: {brand}"
 
         try:
             price = int(price)
-            if price < 0:
-                return False, f"{price}, only use positive number"
-        except(ValueError, TypeError):
-            return False, f"{price}, only use digit"
+            if price <= 0:
+                return False, "Price must be positive"
+        except:
+            return False, "Price must be a number"
 
+        # ساخت شیء محصول
+        product = ProductModel(name=name, brand=brand, price=price)
+        product.save()
+        return True, f"Product '{name}' added successfully"
 
-        ProductModel(name,brand,price)
-        return True, f"name : {name}, brand : {brand}, price : {price},product added successfully"
-
-
-    @staticmethod
-    def edit_product(code,new_name,new_brand,new_price):
-            code = code.strip()
-            name = new_name.strip()
-            brand = new_brand.strip()
-            price = new_price.strip()
-
-            if not re.fullmatch("[a-zA-Z0-9\s]{2,32}", new_name):
-                return False, f"{new_name}, only use letters and digits and space"
-
-            if not re.fullmatch("[a-zA-Z0-9\s]{2,32}", new_brand):
-                return False, f"{new_brand}, only use letters and digits and space"
-
-            try:
-                new_price = int(new_price)
-                if new_price < 0:
-                    return False, f"{new_price}, only use positive number"
-            except(ValueError, TypeError):
-                return False, f"{new_price}, only use digit"
-
-            try:
-                code = int(code)
-                if code < 0:
-                    return False, f"{code}, only use positive number"
-            except(ValueError, TypeError):
-                return False, f"{code}, only use digit"
-
-
-            ProductModel.edit_products(code, new_name, new_brand, new_price)
-            return True, f"code : {code} ,name : {name}, brand : {brand}, price : {price},product edit successfully"
-
-
-    @staticmethod
-    def remove_product(code):
-
-        code = code.strip()
-
+    def edit_product(self, code, name, brand, price):
         try:
             code = int(code)
-            if code < 0:
-                return False, f"{code}, only use positive number"
-        except(ValueError, TypeError):
-            return False, f"{code}, only use digit"
+        except:
+            return False, "Invalid code"
 
-        ProductModel.remove_product(code)
-        return True, f"product remove successfully"
+        product = ProductModel(code=code, name=name, brand=brand, price=price)
+        if not product.update():
+            return False, f"No product found with code {code}"
+        return True, f"Product {code} updated successfully"
 
+    def remove_product(self, code):
+        try:
+            code = int(code)
+        except:
+            return False, "Invalid code"
 
+        product = ProductModel(code=code)
+        if not product.delete():
+            return False, f"No product found with code {code}"
+        return True, f"Product {code} deleted successfully"
