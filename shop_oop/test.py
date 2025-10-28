@@ -1,5 +1,4 @@
-from database.shop_oop.model import ProductModel
-from database.shop_oop.controller import ProductController
+from shop_oop.controller import ProductController
 
 # add
 # p1 = ProductModel("iphone 12 ", 'apple', 800)

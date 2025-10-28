@@ -63,3 +63,5 @@ class ProductModel:
         cursor.close()
         db.close()
         return affected > 0
+
+    
