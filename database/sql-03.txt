@@ -1,0 +1,92 @@
+# CREATE DATABASE BANK;
+
+CREATE TABLE BANK.Branch(
+   b_name char(30)
+);
+
+
+CREATE TABLE BANK.Customer(
+    c_name char(10),
+    c_city char(15),
+    c_street char(20),
+    PRIMARY KEY(c_name)
+);
+
+CREATE TABLE BANK.Deposit
+(
+    c_name char(10) not null ,
+    b_name char(15) not null,
+    A_no char(10),
+    PRIMARY KEY(A_no),
+    FOREIGN KEY (c_name) references BANK.Customer(c_name),
+    FOREIGN KEY (b_name) references BANK.Branch(b_name)
+);
+
+
+drop table BANK.Branch;
+
+CREATE TABLE BANK.Branch(
+   b_name char(30) PRIMARY KEY
+);
+
+ALTER TABLE BANK.Customer ADD n_co CHAR(10);
+ALTER TABLE BANK.Deposit ADD balance INT;
+ALTER TABLE BANK.Deposit MODIFY balance float;
+
+# ALTER TABLE BANK.Customer Drop c_city;
+
+
+# INSERT INTO BANK.Branch values ('Tehran');
+# INSERT INTO BANK.Branch values ('Shiraz');
+# INSERT INTO BANK.Branch values ('Karaj');
+
+INSERT INTO BANK.Customer values ('Emad', 'Tehran','Bahar', '39');
+INSERT INTO BANK.Customer values ('Arsham', 'Shiraz', 'Kaj', '10');
+INSERT INTO BANK.Customer values ('Reza','Karaj' ,'shahrdari', 25);
+
+INSERT INTO BANK.Deposit values ('Emad', 'Tehran', '39', 4900);
+INSERT INTO BANK.Deposit values ('Arsham', 'Shiraz', '10', 5100);
+INSERT INTO BANK.Deposit values ('Reza', 'Karaj', '25', 6100);
+
+DELETE FROM BANK.Deposit WHERE balance < 1000;
+
+
+UPDATE BANK.Customer set c_city='Tabriz' where c_name = 'Emad';
+UPDATE BANK.Deposit set balance =  balance*1.05;
+
+
+CREATE TABLE BANK.Borrow(
+    c_name char(10) not null ,
+    b_name char(15) not null,
+    amount FLOAT,
+    L_no INT PRIMARY KEY AUTO_INCREMENT,
+    FOREIGN KEY (b_name) references BANK.Branch(b_name),
+    FOREIGN KEY (c_name) references BANK.Customer(c_name)
+);
+
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Emad', 'Tehran', 100);
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Arsham', 'Shiraz', 1200);
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Reza', 'Karaj', 6100);
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Emad', 'Karaj', 10000);
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Arsham', 'Karaj', 9800);
+INSERT INTO BANK.Borrow(c_name, b_name, amount) values ('Arsham', 'Karaj', 7800);
+
+
+select  * from BANK.Borrow;
+select c_name from BANK.Deposit;
+
+
+SELECT c_name FROM BANK.Borrow WHERE b_name = 'Karaj';
+SELECT DISTINCT c_name FROM BANK.Borrow WHERE b_name = 'Karaj';
+
+
+SELECT  c_name FROM BANK.Deposit WHERE b_name = 'Karaj' AND balance > 5000;
+
+SELECT c_name from BANK.Customer;
+SELECT c_name from BANK.Borrow;
+
+(SELECT c_name from BANK.Customer) EXCEPT (SELECT c_name from BANK.Borrow);
+
+
+SELECT b_name,avg(amount) FROM BANK.Borrow GROUP BY b_name;
+SELECT b_name,avg(amount) FROM BANK.Borrow GROUP BY b_name HAVING  avg(amount) < 10000 and avg(amount) > 6000;
